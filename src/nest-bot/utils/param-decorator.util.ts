@@ -1,7 +1,7 @@
 import { assignMetadata, PipeTransform, Type } from '@nestjs/common';
 import { isNil, isString } from '@nestjs/common/utils/shared.utils';
-import { BotParamtype } from '../enums/bot-paramtype.enum';
-import { PARAM_ARGS_METADATA } from '../bot.constants';
+import { BotParamtype } from '../interfaces/bot-paramtype.enum';
+import { PARAM_ARGS_METADATA } from '../interfaces/bot.constants';
 
 export type ParamData = object | string | number;
 

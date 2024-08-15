@@ -1,4 +1,4 @@
-import { createListenerDecorator } from '../../nest-bot/utils';
+import { createListenerDecorator } from '../utils';
 import { Scenes } from 'telegraf';
 
 export const SceneEnter =

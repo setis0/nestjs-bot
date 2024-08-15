@@ -1,7 +1,7 @@
 import { ParamData } from '@nestjs/common';
 import { ParamsFactory } from '@nestjs/core/helpers/external-context-creator';
 import { Context } from 'telegraf';
-import { BotParamtype } from '../enums/bot-paramtype.enum';
+import { BotParamtype } from '../interfaces/bot-paramtype.enum';
 
 export class BotParamsFactory implements ParamsFactory {
   exchangeKeyForValue(

@@ -1,6 +1,6 @@
 import { ArgumentsHost } from '@nestjs/common';
 import { ExecutionContextHost } from '@nestjs/core/helpers/execution-context-host';
-import { BotArgumentsHost } from './bot-arguments-host.interface';
+import { BotArgumentsHost } from '../interfaces/bot-arguments-host.interface';
 
 export class BotArgumentsHost
   extends ExecutionContextHost
@@ -8,9 +8,9 @@ export class BotArgumentsHost
 {
   static create(context: ArgumentsHost): BotArgumentsHost {
     const type = context.getType();
-    const tgContext = new BotArgumentsHost(context.getArgs());
-    tgContext.setType(type);
-    return tgContext;
+    const botContext = new BotArgumentsHost(context.getArgs());
+    botContext.setType(type);
+    return botContext;
   }
 
   getContext<T = any>(): T {

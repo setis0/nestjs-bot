@@ -30,7 +30,7 @@ export class Stage<
   register(...scenes: ReadonlyArray<BaseScene<C>>) {
     scenes.forEach((scene) => {
       if (scene?.id == null || typeof scene.middleware !== 'function') {
-        throw new Error('telegraf: Unsupported scene')
+        throw new Error('telegraf: Unsupported decorators')
       }
       this.scenes.set(scene.id, scene)
     })

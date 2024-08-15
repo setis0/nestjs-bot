@@ -2,7 +2,8 @@ import { Context } from './context'
 import { ExclusiveKeys, MaybePromise } from './core/helpers/util'
 import { MiddlewareFn } from './middleware'
 import d from 'debug'
-const debug = d('telegraf:session')
+import { env } from "process";
+const debug = d('bot:session')
 
 export interface SyncSessionStore<T> {
   get: (name: string) => T | undefined
@@ -70,7 +71,7 @@ export function session<
     let released = false
 
     function releaseChecks() {
-      if (released && process.env.EXPERIMENTAL_SESSION_CHECKS)
+      if (released && env.EXPERIMENTAL_SESSION_CHECKS)
         throw new Error(
           "Session was accessed or assigned to after the middleware chain exhausted. This is a bug in your code. You're probably accessing session asynchronously and missing awaits."
         )

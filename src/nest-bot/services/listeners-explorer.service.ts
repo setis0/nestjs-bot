@@ -13,9 +13,9 @@ import {
   BOT_NAME,
   BOT_MODULE_OPTIONS,
   BOT_STAGE,
-} from '../bot.constants';
+} from '../interfaces/bot.constants';
 import { BaseExplorerService } from './base-explorer.service';
-import { BotParamsFactory } from '../factories/bot-params-factory';
+import { BotParamsFactory } from '../functions/bot-params-factory';
 import { BotContextType } from '../execution-context';
 import { ListenerMetadata, BotModuleOptions } from '../interfaces';
 
@@ -24,14 +24,14 @@ export class ListenersExplorerService
   extends BaseExplorerService
   implements OnModuleInit
 {
-  private readonly telegrafParamsFactory = new BotParamsFactory();
-  private bot: Telegraf<any>;
+  private readonly botParamsFactory = new BotParamsFactory();
+  private bot: any;
 
   constructor(
     @Inject(BOT_STAGE)
     private readonly stage: Scenes.Stage<any>,
     @Inject(BOT_MODULE_OPTIONS)
-    private readonly telegrafOptions: BotModuleOptions,
+    private readonly options: BotModuleOptions,
     @Inject(BOT_NAME)
     private readonly botName: string,
     private readonly moduleRef: ModuleRef,
@@ -58,7 +58,7 @@ export class ListenersExplorerService
   explore(): void {
     const modules = this.getModules(
       this.modulesContainer,
-      this.telegrafOptions.include || [],
+      this.options.include || [],
     );
 
     this.registerComposers(modules);
@@ -68,7 +68,7 @@ export class ListenersExplorerService
   exploreUpdates(): void {
     const modules = this.getModules(
       this.modulesContainer,
-      this.telegrafOptions.include || [],
+      this.options.include || [],
     );
 
     this.registerUpdates(modules);
@@ -258,7 +258,7 @@ export class ListenersExplorerService
     prototype: unknown,
     methodName: string,
   ) {
-    const paramsFactory = this.telegrafParamsFactory;
+    const paramsFactory = this.botParamsFactory;
     return this.externalContextCreator.create<
       Record<number, ParamMetadata>,
       BotContextType

@@ -1,6 +1,6 @@
 import { Composer } from 'telegraf';
 import { ComposerMethodArgs, OnlyFunctionPropertyNames } from '../types';
-import { LISTENERS_METADATA } from '../bot.constants';
+import { LISTENERS_METADATA } from '../interfaces/bot.constants';
 import { ListenerMetadata } from '../interfaces';
 
 export function createListenerDecorator<

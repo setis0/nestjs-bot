@@ -1,6 +1,6 @@
 import { ContextType, ExecutionContext } from '@nestjs/common';
 import { ExecutionContextHost } from '@nestjs/core/helpers/execution-context-host';
-import { BotArgumentsHost } from './bot-arguments-host.interface';
+import { BotArgumentsHost } from '../interfaces/bot-arguments-host.interface';
 
 export type BotContextType = 'bot' | ContextType;
 

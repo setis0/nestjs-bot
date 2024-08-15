@@ -78,6 +78,68 @@ providers: [
     }
 ]
 ```
+внедрение 
+```typescript
+constructor(@Inject('bot-1') t1: Bot) {}
+```
+
+```typescript
+app.module.ts:
+
+@Module({
+  imports: [
+    ...,
+  TelegrafModule.forRootAsync({
+    imports: [ConfigModule],
+    inject: [ConfigService],
+    botName: 'admin',
+    useFactory: async (config: ConfigService) => {
+      return {
+        middlewares: [adminSessions.middleware()],
+        token: config.get<string>('BOT_ADMIN_TOKEN'),
+        include: [AdminBotModule]
+      }
+    }
+  }),
+  TelegrafModule.forRootAsync({
+    imports: [ConfigModule],
+    inject: [ConfigService],
+    botName: 'client',
+    useFactory: async (config: ConfigService) => {
+      return {
+        middlewares: [clientSessions.middleware()],
+        token: config.get<string>('BOT_CLIENT_TOKEN'),
+        include: [ClientBotModule]
+      }
+    }
+  }),
+  AdminBotModule,
+  ClientBotModule
+],
+providers: [],
+})
+export class AppModule {}
+client-bot.module.ts:
+
+@Module({
+  providers: [
+    ClientBotUpdate,
+    ClientBotService
+  ],
+  imports: []
+})
+export class ClientBotModule {}
+admin-bot.module.ts:
+
+@Module({
+  providers: [
+    AdminBotUpdate,
+    AdminBotService
+  ],
+  imports: []
+})
+export class AdminBotModule {}
+```
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).

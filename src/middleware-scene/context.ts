@@ -89,7 +89,7 @@ export default class SceneContextScene<
     if (!silent) {
       await this.leave()
     }
-    debug('Entering scene', sceneId, initialState, silent)
+    debug('Entering decorators', sceneId, initialState, silent)
     this.session.current = sceneId
     this.state = initialState
     const ttl = this.current?.ttl ?? this.options.ttl
@@ -116,7 +116,7 @@ export default class SceneContextScene<
   private leaving = false
   async leave() {
     if (this.leaving) return
-    debug('Leaving scene')
+    debug('Leaving decorators')
     try {
       this.leaving = true
       if (this.current === undefined) {

@@ -6,7 +6,7 @@ import {
   UPDATE_METADATA,
   WIZARD_STEP_METADATA,
   COMPOSER_METADATA,
-} from '../telegraf.constants';
+} from '../interfaces/bot.constants';
 import {
   ListenerMetadata,
   SceneMetadata,

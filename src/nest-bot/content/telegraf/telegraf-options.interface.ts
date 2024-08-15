@@ -2,11 +2,19 @@ import { ModuleMetadata, Type } from '@nestjs/common/interfaces';
 import { Middleware, Telegraf } from 'telegraf';
 
 export interface TelegrafModuleOptions {
-  token: string;
   botName?: string;
-  options?: Partial<Telegraf.Options<any>>;
-  launchOptions?: Telegraf.LaunchOptions | false;
-  include?: Function[];
+  type:'telegraf'
+  name?: string;
+  configure:{
+    options:{
+      token: string;
+      options?: Partial<Telegraf.Options<any>>;
+      launchOptions?: Telegraf.LaunchOptions | false;
+    }
+    api: ()=>Promise<Telegraf>
+    start: ()=>Promise<void>,
+    stop: ()=>Promise<void>
+  }
   middlewares?: ReadonlyArray<Middleware<any>>;
 }
 

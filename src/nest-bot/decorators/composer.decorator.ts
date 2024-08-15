@@ -1,5 +1,5 @@
 import { SetMetadata } from '@nestjs/common';
-import { COMPOSER_METADATA } from '../../bot.constants';
+import { COMPOSER_METADATA } from '../interfaces/bot.constants';
 
 /**
  * `@Composer` like Update decorator, executed before decorators handlers.

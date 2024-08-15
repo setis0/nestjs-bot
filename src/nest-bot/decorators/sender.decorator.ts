@@ -1,6 +1,6 @@
 import { PipeTransform, Type } from '@nestjs/common';
-import { createBotPipesParamDecorator } from '../../utils/param-decorator.util';
-import { BotParamtype } from '../../enums/bot-paramtype.enum';
+import { createBotPipesParamDecorator } from '../utils/param-decorator.util';
+import { BotParamtype } from '../interfaces/bot-paramtype.enum';
 
 export function Sender(): ParameterDecorator;
 export function Sender(

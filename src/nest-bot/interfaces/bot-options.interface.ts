@@ -1,24 +1,32 @@
 import { ModuleMetadata, Type } from '@nestjs/common/interfaces';
 import { Middleware, Telegraf } from 'telegraf';
+export interface BotApiManager{
+  start: ()=>Promise<void>,
+  stop: ()=>Promise<void>
+  api:unknown
+}
+export interface BotApiContext{
+  options?:object
+  api: (options?:object)=>Promise<unknown & BotApiManager>
 
+}
 export interface BotModuleOptions {
-  type:"telegram"
-  botName?: string;
-  options?: Partial<Telegraf.Options<any>>;
-  launchOptions?: Telegraf.LaunchOptions | false;
-  include?: Function[];
+  type:string
+  name?: string;
+  configure:BotApiContext
   middlewares?: ReadonlyArray<Middleware<any>>;
+  include?: Function[];
 }
 
 export interface BotOptionsFactory {
-  createTelegrafOptions():
+  createBotOptions():
     | Promise<BotModuleOptions>
     | BotModuleOptions;
 }
 
 export interface BotModuleAsyncOptions
   extends Pick<ModuleMetadata, 'imports'> {
-  botName?: string;
+  name?: string;
   useExisting?: Type<BotOptionsFactory>;
   useClass?: Type<BotOptionsFactory>;
   useFactory?: (

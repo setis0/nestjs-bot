@@ -1,4 +1,4 @@
-import { SceneOptions } from '../scenes/base';
+import { SceneOptions } from '../../middleware-scene/base';
 
 export interface SceneMetadata {
   sceneId: string;

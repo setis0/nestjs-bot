@@ -1,5 +1,5 @@
 import { SetMetadata } from '@nestjs/common';
-import { UPDATE_METADATA } from '../../bot.constants';
+import { UPDATE_METADATA } from '../interfaces/bot.constants';
 
 /**
  * `@Update` decorator, it's like NestJS `@Controller` decorator,

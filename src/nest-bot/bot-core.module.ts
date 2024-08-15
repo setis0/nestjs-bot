@@ -16,19 +16,21 @@ import {
 import {
   BOT_NAME,
   BOT_MODULE_OPTIONS,
-} from './bot.constants';
+} from './interfaces/bot.constants';
 import { ListenersExplorerService, MetadataAccessorService } from './services';
-import { BotStageProvider } from './stage.provider';
+import { BotStageProvider } from './providers/stage.provider';
 import {
   allBotsMap,
   allBotsProvider,
-} from './all-bots.provider';
+} from './providers/all-bots.provider';
 import { createBotFactory, getBotToken } from './utils';
+import { BotService } from './services/bot.service';
+import { TestAppModule } from './test/test.app/test.app.module';
 
 @Global()
 @Module({
-  imports: [DiscoveryModule],
-  providers: [ListenersExplorerService, MetadataAccessorService],
+  imports: [DiscoveryModule, TestAppModule],
+  providers: [ListenersExplorerService, MetadataAccessorService, BotService],
 })
 export class BotCoreModule implements OnApplicationShutdown {
   constructor(
@@ -38,18 +40,18 @@ export class BotCoreModule implements OnApplicationShutdown {
   ) {}
 
   public static forRoot(options: BotModuleOptions): DynamicModule {
-    const telegrafBotName = getBotToken(options.botName);
+    const BotName = getBotToken(options.name);
 
-    const telegrafBotNameProvider = {
+    const BotNameProvider = {
       provide: BOT_NAME,
-      useValue: telegrafBotName,
+      useValue: BotName,
     };
 
-    const telegrafBotProvider: Provider = {
-      provide: telegrafBotName,
+    const BotProvider: Provider = {
+      provide: BotName,
       useFactory: async () => {
-        const bot = await createBotFactory(options);
-        allBotsMap.set(telegrafBotName, bot);
+        const bot = await options.configure.api(options.configure.options);
+        allBotsMap.set(BotName, bot);
         return bot;
       },
     };
@@ -62,14 +64,14 @@ export class BotCoreModule implements OnApplicationShutdown {
           useValue: options,
         },
         BotStageProvider,
-        telegrafBotNameProvider,
-        telegrafBotProvider,
+        BotNameProvider,
+        BotProvider,
         allBotsProvider,
       ],
       exports: [
         BotStageProvider,
-        telegrafBotNameProvider,
-        telegrafBotProvider,
+        BotNameProvider,
+        BotProvider,
         allBotsProvider,
       ],
     };
@@ -88,7 +90,7 @@ export class BotCoreModule implements OnApplicationShutdown {
     const telegrafBotProvider: Provider = {
       provide: telegrafBotName,
       useFactory: async (options: BotModuleOptions) => {
-        const bot = await createBotFactory(options);
+        const bot = await options.configure.api(options.configure.options);
         allBotsMap.set(telegrafBotName, bot);
         return bot;
       },
@@ -153,7 +155,7 @@ export class BotCoreModule implements OnApplicationShutdown {
     return {
       provide: BOT_MODULE_OPTIONS,
       useFactory: async (optionsFactory: BotOptionsFactory) =>
-        await optionsFactory.createTelegrafOptions(),
+        await optionsFactory.createBotOptions(),
       inject,
     };
   }

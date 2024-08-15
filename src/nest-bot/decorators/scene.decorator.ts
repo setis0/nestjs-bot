@@ -1,7 +1,7 @@
 import { SetMetadata } from '@nestjs/common';
 import { SceneOptions } from 'telegraf/typings/scenes/base';
-import { SceneMetadata } from '../../nest-bot/interfaces';
-import { SCENE_METADATA } from '../../nest-bot/bot.constants';
+import { SceneMetadata } from '../interfaces';
+import { SCENE_METADATA } from '../interfaces/bot.constants';
 
 export const Scene = (
   sceneId: string,

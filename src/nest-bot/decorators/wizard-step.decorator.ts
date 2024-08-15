@@ -1,5 +1,5 @@
 import { SetMetadata } from '@nestjs/common';
-import { WizardStepMetadata } from '../../nest-bot/interfaces';
+import { WizardStepMetadata } from '../interfaces';
 import { WIZARD_STEP_METADATA } from '../../telegraf.constants';
 
 export const WizardStep = (step: number) =>
